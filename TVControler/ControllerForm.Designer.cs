@@ -101,7 +101,7 @@
             this.Controls.Add(this.volumePlus);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "ControllerForm";
-            this.Text = "DLNA Player - version 0.2 (made by m9ra)";
+            this.Text = "DLNA Player - version 0.3 (made by m9ra)";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ControllerForm_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -21,12 +21,13 @@ namespace TVControler
 
         public readonly int LocalPort = 42345;
 
+        public event Action ConnectionError;
+
         private readonly ControlerServer _server;
 
         public Controller(string hostIp, int controlPort)
         {
             _server = new ControlerServer(LocalPort);
-
             RemoteIP = hostIp;
             RemotePort = controlPort;
 
@@ -49,6 +50,8 @@ namespace TVControler
                     new Wr(ConsoleColor.Yellow, "Body '{0}'", transportParser.Body)
                     );
 
+            if (transportParser == null)
+                return;
 
             var playParser = sendRequest(UpnpProtocol.Play, 1);
             if (playParser != null)
@@ -63,6 +66,10 @@ namespace TVControler
         internal void IncrementVolume(int delta)
         {
             var volumeResponse = sendRequest(UpnpProtocol.GetVolume);
+
+            if (volumeResponse == null)
+                //we are not connected
+                return;
 
             var volumePrefix = "<CurrentVolume>";
             var volumeStartIndex = volumeResponse.Body.IndexOf(volumePrefix) + volumePrefix.Length;
@@ -88,8 +95,11 @@ namespace TVControler
                 var http = req.GetHttp(RemoteUri, pars);
                 return sendHTTP(http);
             }
-            catch (SocketException ex)
+            catch (SocketException)
             {
+                if (ConnectionError != null)
+                    ConnectionError();
+
                 return null;
             }
         }
@@ -98,7 +108,17 @@ namespace TVControler
         {
             http = string.Format(http, pars);
             var tv = new TcpClient();
-            tv.Connect(RemoteIP, RemotePort);
+            var result = tv.BeginConnect(RemoteUri, LocalPort, null, null);
+
+            var success = result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
+
+            if (!success)
+            {
+                throw new Exception("Failed to connect.");
+            }
+
+            // we have connected
+            tv.EndConnect(result);
 
             var stream = tv.GetStream();
             stream.Write(http);

@@ -20,9 +20,16 @@ namespace TVControler
             InitializeComponent();
 
             ConsoleUtils.WriteLn(
-                new Wr(ConsoleColor.Yellow, "Target {0}:{1}", SamsungTV.IP,SamsungTV.ControlPort)
+                new Wr(ConsoleColor.Yellow, "Target {0}:{1}", SamsungTV.IP, SamsungTV.ControlPort)
             );
+
+
             _controller = new Controller(SamsungTV.IP, SamsungTV.ControlPort);
+            _controller.ConnectionError += () =>
+            {
+                MessageBox.Show("Connection was not established. Check whether TV is turned on and you are connected to the network.", "Connection problem", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                setPath(null);
+            };
 
         }
 
@@ -41,12 +48,11 @@ namespace TVControler
                     new Wr(ConsoleColor.Green, "Playing file '{0}'", file)
                 );
 
-                _controller.PlayFile(file);
-                showPath(file);
+                setPath(file);
             }
         }
 
-        private void showPath(string file)
+        private void setPath(string file)
         {
             if (file == null)
             {
@@ -78,7 +84,7 @@ namespace TVControler
         private void stop_Click(object sender, EventArgs e)
         {
             _controller.Stop();
-            showPath(null);
+            setPath(null);
         }
 
         private void ControllerForm_FormClosing(object sender, FormClosingEventArgs e)
