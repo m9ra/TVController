@@ -1,0 +1,21 @@
+Cache-Control: no-cache
+
+Connection: Close
+
+Pragma: no-cache
+
+Content-Type: text/xml; charset="utf-8"
+
+User-Agent: Microsoft-Windows/6.1 UPnP/1.0 Windows-Media-Player-DMC/12.0.7600.16385 DLNADOC/1.50
+
+SOAPAction: "urn:schemas-upnp-org:service:AVTransport:1#GetTransportInfo"
+
+Content-Length: 400
+
+Host: 192.168.1.53:52235
+
+
+
+<?xml version="1.0"?>
+
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Body><m:GetTransportInfo xmlns:m="urn:schemas-upnp-org:service:AVTransport:1"><InstanceID xmlns:dt="urn:schemas-microsoft-com:datatypes" dt:dt="ui4">0</InstanceID></m:GetTransportInfo></SOAP-ENV:Body></SOAP-ENV:Envelope>
