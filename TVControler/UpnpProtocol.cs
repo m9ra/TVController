@@ -87,6 +87,16 @@ AvTransportURL,
 </u:GetPositionInfo>");
 
         /// <summary>
+        /// Request for getting info of currently played AVTransport.
+        /// </summary>
+        public static readonly UpnpRequest GetTransportInfo = new UpnpRequest(
+AvTransportURL,
+@"urn:schemas-upnp-org:service:AVTransport:1#GetTransportInfo",
+@"<u:GetTransportInfo xmlns:u=""urn:schemas-upnp-org:service:AVTransport:1"">
+    {INSTANCE}
+</u:GetTransportInfo>");
+
+        /// <summary>
         /// Request for play command on currently played AVTransport. Uses parameter 0-Speed
         /// </summary>
         public static readonly UpnpRequest Play = new UpnpRequest(
@@ -99,7 +109,7 @@ AvTransportURL,
 
 
         /// <summary>
-        /// Request for play command on currently played AVTransport. Uses parameter 0-Speed
+        /// Request for stop command on currently played AVTransport. Uses parameter 0-Speed
         /// </summary>
         public static readonly UpnpRequest Stop = new UpnpRequest(
 AvTransportURL,
@@ -109,12 +119,22 @@ AvTransportURL,
     <Speed xmlns:dt=""urn:schemas-microsoft-com:datatypes"" dt:dt=""string"">1</Speed>
 </m:Stop>");
 
+        /// <summary>
+        /// Request for pause command on currently played AVTransport. Uses parameter 0-Speed
+        /// </summary>
+        public static readonly UpnpRequest Pause = new UpnpRequest(
+AvTransportURL,
+@"urn:schemas-upnp-org:service:AVTransport:1#Pause",
+@"<m:Pause xmlns:m=""urn:schemas-upnp-org:service:AVTransport:1"">
+    {INSTANCE}
+    <Speed xmlns:dt=""urn:schemas-microsoft-com:datatypes"" dt:dt=""string"">1</Speed>
+</m:Pause>");
 
         /// <summary>
         /// Seek to position in milliseconds specified by format argument 0.
         /// </summary>
         public static readonly UpnpRequest SeekTo = new UpnpRequest(
-@"/MediaRenderer_AVTransport/control",
+AvTransportURL,
 @"urn:schemas-upnp-org:service:AVTransport:1#Seek",
 @"<u:Seek xmlns:u=""urn:schemas-upnp-org:service:AVTransport:1"">
     {INSTANCE}
@@ -133,6 +153,20 @@ AvTransportURL,
     <CurrentURI>{0}</CurrentURI>
     <CurrentURIMetaData></CurrentURIMetaData>
 </u:SetAVTransportURI>
+");
+
+
+        /// <summary>
+        /// Set next URI which will be source for AV Transport specified by format argument 0 - URI (http://75.101.165.227:8080/app/iLJy+VD9xyYqv5jtERGBijAeiqUmYWqCFzy4Li6gM0uMzI8pYoRWTxqp+UxEy14ibHGOrLpqJTkjI+WE6Q6lbQ6e2+1X96ToH8lGCv0f4f88M0jxU6S6z4SwC8KOCoMhscRxjOiy4CJVzNNeCGQxpw==.mp4)
+        /// </summary>
+        public static readonly UpnpRequest SetNextAVTransportURI = new UpnpRequest(
+AvTransportURL,
+@"urn:schemas-upnp-org:service:AVTransport:1#SetNextAVTransportURI",
+@"<u:SetNextAVTransportURI xmlns:u=""urn:schemas-upnp-org:service:AVTransport:1"">
+    {INSTANCE}
+    <NextURI>{0}</NextURI>
+    <NextURIMetaData></NextURIMetaData>
+</u:SetNextAVTransportURI>
 ");
 
         public static string GetBrowseResponse(DIDLResult didl)

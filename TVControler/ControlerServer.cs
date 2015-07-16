@@ -108,10 +108,10 @@ namespace TVControler
 
 
             stream.Write(response.Headers);
-       /*     ConsoleUtils.WriteLn(
-             new Wr(ConsoleColor.Yellow, "{0} -> {1}", client.Client.LocalEndPoint, client.Client.RemoteEndPoint),
-             new Wr(ConsoleColor.White, response.Headers)
-           );*/
+            /*     ConsoleUtils.WriteLn(
+                  new Wr(ConsoleColor.Yellow, "{0} -> {1}", client.Client.LocalEndPoint, client.Client.RemoteEndPoint),
+                  new Wr(ConsoleColor.White, response.Headers)
+                );*/
 
             var method = parser.GetHeader(HTTPRequestParser.Header_Method);
 
@@ -125,7 +125,7 @@ namespace TVControler
         private HTTPResponse createResponse(HTTPRequestParser parser)
         {
             var base64 = parser.GetHeader(HTTPRequestParser.Header_Uri);
-            base64 = HTTPProtocol.URLDecode(base64).Replace("/", "").Replace('_', '=');
+            base64 = HTTPProtocol.URLDecode(base64).Replace("/", "").Substring("b64_".Length).Replace('_', '=');
             var filepathBytes = Convert.FromBase64String(base64);
             var filepath = Encoding.UTF8.GetString(filepathBytes);
 

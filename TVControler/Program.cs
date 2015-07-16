@@ -36,6 +36,7 @@ namespace TVControler
         static void Main()
         {
             Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
+            Application.EnableVisualStyles();
 
             var form = new ControllerForm(null);
             form.Show();

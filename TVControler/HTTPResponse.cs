@@ -52,9 +52,13 @@ namespace TVControler
             Microsoft.Win32.RegistryKey registryKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
             if (registryKey != null && registryKey.GetValue("Content Type") != null)
                 contentType = registryKey.GetValue("Content Type").ToString();
-            if (contentType != "text/xml")
-                return "video/avi";
-            return contentType;
+
+            if (contentType == "text/xml")
+                return contentType;
+            if (contentType.StartsWith("image"))
+                return "image/jpeg";
+
+            return "video/avi";
         } 
 
         public static HTTPResponse FromData(HTTPRequestParser request, string data,int code=200)

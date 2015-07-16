@@ -10,6 +10,8 @@ namespace TVControler
 {
     static class NetworkTools
     {
+        public static readonly int MB = 2 << 20;
+
         public static void Write(this NetworkStream stream, string data)
         {
             var buff = Encoding.UTF8.GetBytes(data);

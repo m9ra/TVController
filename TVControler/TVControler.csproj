@@ -71,8 +71,14 @@
     <Compile Include="HTTPResponse_obsolete.cs" />
     <Compile Include="HTTPServer.cs" />
     <Compile Include="NetworkTools.cs" />
+    <Compile Include="PlayInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SharedTree.cs" />
     <Compile Include="UHTTPServer.cs" />
     <Compile Include="UpnpProtocol.cs" />
@@ -85,6 +91,10 @@
   <ItemGroup>
     <EmbeddedResource Include="ControllerForm.resx">
       <DependentUpon>ControllerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
