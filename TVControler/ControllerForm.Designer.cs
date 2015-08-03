@@ -101,10 +101,10 @@
             // timeBar
             // 
             this.timeBar.LargeChange = 0;
-            this.timeBar.Location = new System.Drawing.Point(12, 104);
+            this.timeBar.Location = new System.Drawing.Point(-1, 104);
             this.timeBar.Maximum = 0;
             this.timeBar.Name = "timeBar";
-            this.timeBar.Size = new System.Drawing.Size(624, 45);
+            this.timeBar.Size = new System.Drawing.Size(637, 45);
             this.timeBar.TabIndex = 3;
             this.timeBar.TickStyle = System.Windows.Forms.TickStyle.None;
             this.timeBar.Scroll += new System.EventHandler(this.trackBar1_Scroll);
