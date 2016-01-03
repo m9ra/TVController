@@ -145,6 +145,7 @@ namespace TVControler
                         }
                     });
 
+                    th.IsBackground = true;
                     th.Start();
                 }
             }

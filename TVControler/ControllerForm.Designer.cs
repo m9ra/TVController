@@ -180,8 +180,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ControllerForm";
-            this.Text = "TV Controller - version 1.51 (made by m9ra)";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ControllerForm_FormClosing);
+            this.Text = "TV Controller - version 1.7 (made by m9ra)";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.form_Closing);
             ((System.ComponentModel.ISupportInitialize)(this.timeBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

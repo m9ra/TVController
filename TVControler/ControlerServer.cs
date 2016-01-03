@@ -61,6 +61,7 @@ namespace TVControler
                 }
 
                 var clientTh = new Thread(() => _handleClient(client));
+                clientTh.IsBackground = true;
                 clientTh.Start();
             }
             _listener.Stop();
@@ -125,7 +126,7 @@ namespace TVControler
         private HTTPResponse createResponse(HTTPRequestParser parser)
         {
             var base64 = parser.GetHeader(HTTPRequestParser.Header_Uri);
-            base64 = HTTPProtocol.URLDecode(base64).Replace("/", "").Substring("b64_".Length).Replace('_', '=');
+            base64 = HTTPProtocol.URLDecode(base64).TrimStart('/').Substring("b64_".Length).Replace('_', '=');
             var filepathBytes = Convert.FromBase64String(base64);
             var filepath = Encoding.UTF8.GetString(filepathBytes);
 

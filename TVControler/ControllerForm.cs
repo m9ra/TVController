@@ -17,6 +17,22 @@ namespace TVControler
 
         private DateTime? _imageStart;
 
+        internal bool IsPlayInitiator
+        {
+            get
+            {
+                var info = _controller.CurrentInfo;
+                if (info == null || _controller.LastUrlBase == null)
+                    return false;
+
+                var playedFile = info.PlayedFile;
+                if (playedFile == null)
+                    return false;
+
+                return playedFile.StartsWith(_controller.LastUrlBase);
+            }
+        }
+
         public volatile bool IsClosed = false;
 
         public ControllerForm(string playPath)
@@ -25,9 +41,7 @@ namespace TVControler
             ConsoleUtils.WriteLn(
                 new Wr(ConsoleColor.Yellow, "Target {0}:{1}", SamsungTV.IP, SamsungTV.ControlPort)
             );
-
-
-
+            
             _controller = new Controller(SamsungTV.IP, SamsungTV.ControlPort);
             displayFile(null);
         }
@@ -41,7 +55,7 @@ namespace TVControler
         private void browseFile_Click(object sender, EventArgs e)
         {
             var dialog = new OpenFileDialog();
-            var videoFiles = "*.avi;*.mts;*.ts;*.mp4;*.wmv;*.m2ts;*.mpg;*.mpeg";
+            var videoFiles = "*.avi;*.mts;*.ts;*.mov;*.mp4;*.wmv;*.m2ts;*.mpg;*.mpeg;*.mkv";
             var imageFiles = "*.bmp;*.jpg;*.jpeg;*.png";
             dialog.Filter = "Compatible files|" + videoFiles + ";" + imageFiles + "|Video files|" + videoFiles + "|Image files|" + imageFiles;
             dialog.FilterIndex = 1;
@@ -129,9 +143,16 @@ namespace TVControler
             _controller.Pause();
         }
 
-        private void ControllerForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void form_Closing(object sender, FormClosingEventArgs e)
         {
             IsClosed = true;
+
+            if (IsPlayInitiator)
+            {
+                _controller.Stop();
+                System.Threading.Thread.Sleep(500);
+                Application.Exit();
+            }
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
@@ -235,8 +256,8 @@ namespace TVControler
             this.stateInfo.ForeColor = getStateColor(info.CurrentTransportState);
             displayFile(info.PlayedFile);
 
-            if (info.IsStopped)
-                playNextFile();
+        //    if (info.IsStopped)
+        //        playNextFile();
         }
 
         private Color getStateColor(string transportState)

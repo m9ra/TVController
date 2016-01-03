@@ -26,6 +26,8 @@ namespace TVControler
 
         public PlayInfo CurrentInfo { get; private set; }
 
+        public string LastUrlBase;
+
         private object _L_operations = new object();
 
         private volatile bool _isConnected;
@@ -167,15 +169,15 @@ namespace TVControler
         private void _PlayFile(string file)
         {
             var locIp = NetworkTools.GetLocalIP(RemoteIP);
-            var urlBase = "http://" + locIp + ":" + LocalPort + "/";
+            LastUrlBase = "http://" + locIp + ":" + LocalPort + "/";
 
             var encodedFilePath = "b64_" + Convert.ToBase64String(Encoding.UTF8.GetBytes(file)).Replace('=', '_');
 
-            var transportParser = sendRequest(UpnpProtocol.SetAVTransportURI, urlBase + encodedFilePath);
+            var transportParser = sendRequest(UpnpProtocol.SetAVTransportURI, LastUrlBase + encodedFilePath);
             if (transportParser == null)
                 return;
 
-            _Play();  
+            _Play();
         }
 
         #endregion

@@ -61,6 +61,7 @@ namespace TVControler
                 }
 
                 var clientTh = new Thread(() => _handleClient(client));
+                clientTh.IsBackground = true;
                 clientTh.Start();
             }
             _listener.Stop();
